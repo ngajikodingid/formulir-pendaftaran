@@ -615,7 +615,9 @@
             <!-- Header -->
             <div class="header">
                 <div class="header-content">
-                    <div class="logo">🕌</div>
+                    <div class="logo">
+    <img src="./Logo Ma'had Aly Sidogiri.jpg" alt="Logo Ma'had Aly Sidogiri">
+</div>
                     <h1>Ma'had Aly Sidogiri</h1>
                     <p>Formulir Pendaftaran Mahasantri Baru Tahun Ajaran 2024/2025</p>
                 </div>
@@ -953,30 +955,44 @@
         // UPLOAD TO GOOGLE DRIVE
         // ========================================
         async function uploadToGoogleDrive(file, type) {
-            const formData = new FormData();
-            formData.append('file', file);
-            formData.append('type', type);
-            formData.append('timestamp', new Date().getTime());
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = async () => {
+            const base64Data = reader.result.split(",")[1];
 
             try {
                 const response = await fetch(CONFIG.GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        filename: file.name,
+                        mimeType: file.type,
+                        data: base64Data,
+                        jenis: type
+                    })
                 });
 
                 const result = await response.json();
-                
+
                 if (result.success) {
-                    return result.url;
+                    resolve(result.url);
                 } else {
-                    throw new Error(result.message || 'Upload gagal');
+                    reject(result.message || "Upload gagal");
                 }
-            } catch (error) {
-                // Fallback: return placeholder
-                console.error('Upload error:', error);
-                return `[File ${type}: ${file.name}]`;
+
+            } catch (err) {
+                reject(err);
             }
-        }
+        };
+
+        reader.onerror = () => reject("Gagal membaca file");
+        reader.readAsDataURL(file);
+    });
+}
+
 
         // ========================================
         // FORMAT MESSAGE
