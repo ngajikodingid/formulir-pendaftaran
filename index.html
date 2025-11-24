@@ -3,1095 +3,488 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendaftaran Mahasantri Baru - Ma'had Aly Sidogiri</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Penerimaan Mahasantri Baru - MAS</title>
+    <!-- Bootstrap 5 CSS (Formal UI) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Formal Serif & Sans) -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --secondary: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --dark: #1f2937;
-            --light: #f9fafb;
-            --border: #e5e7eb;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            --pps-primary: #0f5132; /* Dark Green Sidogiri Style */
+            --pps-secondary: #198754;
+            --pps-gold: #d4ac0d;
+            --bg-light: #f4f6f9;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
+            background-color: var(--bg-light);
+            font-family: 'Roboto', sans-serif;
+            color: #333;
         }
 
-        /* Animated Background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') repeat-x;
-            animation: wave 15s linear infinite;
-            pointer-events: none;
+        h1, h2, h3, h4, .navbar-brand {
+            font-family: 'Merriweather', serif; /* Serif gives formal look */
         }
 
-        @keyframes wave {
-            0% { background-position-x: 0; }
-            100% { background-position-x: 1440px; }
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 40px auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Glass Card Effect */
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-            padding: 50px 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .logo {
-    width: 80px;
-    height: 80px;
-    background: white;
-    border-radius: 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    overflow: hidden;
-}
-
-.logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-        .header h1 {
-            color: white;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
-
-        .header p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 15px;
-            font-weight: 400;
-        }
-
-        /* Progress Steps */
-        .progress-steps {
-            display: flex;
-            justify-content: space-between;
-            padding: 30px 40px;
-            background: linear-gradient(to bottom, #f8fafc 0%, white 100%);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .step {
-            flex: 1;
-            text-align: center;
-            position: relative;
-        }
-
-        .step::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            width: 100%;
-            height: 2px;
-            background: var(--border);
-            z-index: 0;
-        }
-
-        .step:first-child::before {
-            display: none;
-        }
-
-        .step-number {
-            width: 40px;
-            height: 40px;
+        /* Header Official */
+        .main-header {
             background: white;
-            border: 3px solid var(--border);
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            border-bottom: 3px solid var(--pps-gold);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo-container img {
+            height: 60px;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
             font-weight: 700;
-            font-size: 14px;
-            color: #9ca3af;
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s;
+            color: var(--pps-primary);
+            margin: 0;
         }
 
-        .step.active .step-number {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-            transform: scale(1.1);
+        .logo-text p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .step.completed .step-number {
-            background: var(--secondary);
-            border-color: var(--secondary);
-            color: white;
-        }
-
-        .step-label {
-            display: block;
-            margin-top: 8px;
-            font-size: 12px;
-            color: #6b7280;
+        /* Navigation */
+        .nav-tabs .nav-link {
+            color: #555;
             font-weight: 500;
+            border: none;
+            border-bottom: 3px solid transparent;
         }
 
-        .step.active .step-label {
-            color: var(--primary);
-            font-weight: 600;
+        .nav-tabs .nav-link.active {
+            color: var(--pps-primary);
+            border-bottom: 3px solid var(--pps-primary);
+            background: transparent;
         }
 
-        /* Form Container */
-        .form-container {
-            padding: 40px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 24px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-title i {
-            color: var(--primary);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        /* Cards */
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--dark);
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .required {
-            color: var(--danger);
-            margin-left: 3px;
-        }
-
-        .input-group {
-            position: relative;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #9ca3af;
-            font-size: 16px;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="date"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 14px 16px;
-            padding-left: 45px;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            font-size: 14px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s;
-            background: white;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        /* File Upload - Modern */
-        .file-upload-container {
-            border: 2px dashed var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            background: #f9fafb;
-            transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .file-upload-container:hover {
-            border-color: var(--primary);
-            background: #eff6ff;
-        }
-
-        .file-upload-container.dragover {
-            border-color: var(--primary);
-            background: #dbeafe;
-            transform: scale(1.02);
-        }
-
-        .file-upload-container input[type="file"] {
-            display: none;
-        }
-
-        .upload-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), #3b82f6);
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-            color: white;
-            font-size: 24px;
-        }
-
-        .upload-text {
-            font-size: 15px;
-            color: var(--dark);
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .upload-hint {
-            font-size: 13px;
-            color: #6b7280;
-        }
-
-        .file-preview {
-            display: none;
-            margin-top: 16px;
-            padding: 16px;
-            background: white;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-
-        .file-preview.show {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .file-info-preview {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .file-icon-preview {
-            width: 40px;
-            height: 40px;
-            background: #dcfce7;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--secondary);
-            font-size: 18px;
-        }
-
-        .file-details {
-            text-align: left;
-        }
-
-        .file-name-text {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 4px;
-        }
-
-        .file-size {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .btn-remove-file {
-            background: #fee2e2;
-            color: var(--danger);
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-remove-file:hover {
-            background: #fecaca;
-        }
-
-        /* Alert */
-        .alert {
-            padding: 16px 20px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: start;
-            gap: 12px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .alert-info {
-            background: #dbeafe;
-            border: 1px solid #93c5fd;
-            color: #1e40af;
-        }
-
-        .alert i {
-            font-size: 18px;
-            margin-top: 2px;
-        }
-
-        /* Button */
-        .btn-submit {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(37, 99, 235, 0.4);
-        }
-
-        .btn-submit:active {
-            transform: translateY(0);
-        }
-
-        .btn-submit:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        /* Loading Overlay */
-        .loading-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .loading-overlay.show {
-            display: flex;
-        }
-
-        .loading-content {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            max-width: 300px;
-        }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid #e5e7eb;
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 8px;
-        }
-
-        .loading-hint {
-            font-size: 13px;
-            color: #6b7280;
-        }
-
-        /* Progress Bar */
-        .upload-progress {
-            display: none;
-            margin-top: 12px;
-        }
-
-        .upload-progress.show {
-            display: block;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 6px;
-            background: #e5e7eb;
-            border-radius: 10px;
             overflow: hidden;
-            margin-bottom: 8px;
         }
 
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            border-radius: 10px;
-            transition: width 0.3s;
-            width: 0%;
+        .card-header {
+            background-color: var(--pps-primary);
+            color: white;
+            font-weight: 600;
+            padding: 12px 20px;
+            border-bottom: 3px solid var(--pps-gold);
         }
 
-        .progress-text {
-            font-size: 12px;
-            color: #6b7280;
-            text-align: center;
+        .form-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #444;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                margin: 20px auto;
-            }
-
-            .form-container {
-                padding: 24px;
-            }
-
-            .header {
-                padding: 40px 24px;
-            }
-
-            .header h1 {
-                font-size: 24px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
-
-            .progress-steps {
-                padding: 20px;
-            }
-
-            .step-label {
-                font-size: 10px;
-            }
+        .form-control {
+            border-radius: 4px;
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
         }
 
-        /* Success Animation */
-        @keyframes successScale {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        .form-control:focus {
+            border-color: var(--pps-secondary);
+            box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
         }
 
-        .success-icon {
-            animation: successScale 0.5s ease-in-out;
+        .btn-primary {
+            background-color: var(--pps-primary);
+            border-color: var(--pps-primary);
+            padding: 10px 25px;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: #0a3622;
+        }
+
+        /* Status Badge */
+        .badge-status {
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: #212529;
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-content">
-            <div class="spinner"></div>
-            <div class="loading-text">Mengirim Data...</div>
-            <div class="loading-hint">Mohon tunggu sebentar</div>
-            <div class="upload-progress" id="uploadProgress">
-                <div class="progress-bar-container">
-                    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Official Header -->
+    <header class="main-header sticky-top">
+        <div class="container">
+            <div class="d-flex align-items-center gap-3">
+                <div class="logo-container">
+                    <!-- Ganti URL Logo -->
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJ1jL_g9U0LC8yGxHce2JsSIdnv8Cwp0AdOU9thxctco6VsCvr-88TmPGIkk5CYDpJgd5naE41eLBcC8tpcfbbQmUHHYkQcwXRbb2rXrdSjShHqnnwotdq4Q0VQ1nvdAfQCj6rjhaxLVvh-58FmKW4mDPUWCVqqw24QXTBMa2Hpa_HMY3boJruhDCuuKo/s320/Logo%20Ma%27had%20Aly%20Sidogiri.jpg" alt="Logo PPS">
                 </div>
-                <div class="progress-text" id="progressText">0%</div>
+                <div class="logo-text">
+                    <h1>MA'HAD ALY SIDOGIRI</h1>
+                    <p>PANITIA PENERIMAAN MAHASANTRI BARU TAHUN AKADEMIK 1446-1447 H</p>
+                </div>
             </div>
         </div>
-    </div>
+    </header>
 
-    <div class="container">
-        <div class="card">
-            <!-- Header -->
-            <div class="header">
-                <div class="header-content">
-                    <div class="logo">
-    <img src="./Logo Ma'had Aly Sidogiri.jpg" alt="Logo Ma'had Aly Sidogiri">
-</div>
-                    <h1>Ma'had Aly Sidogiri</h1>
-                    <p>Formulir Pendaftaran Mahasantri Baru Tahun Ajaran 2024/2025</p>
-                </div>
-            </div>
-
-            <!-- Progress Steps -->
-            <div class="progress-steps">
-                <div class="step active" id="step1">
-                    <span class="step-number">1</span>
-                    <span class="step-label">Data Diri</span>
-                </div>
-                <div class="step" id="step2">
-                    <span class="step-number">2</span>
-                    <span class="step-label">Berkas</span>
-                </div>
-                <div class="step" id="step3">
-                    <span class="step-number">3</span>
-                    <span class="step-label">Kirim</span>
-                </div>
-            </div>
-
-            <!-- Form -->
-            <div class="form-container">
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle"></i>
-                    <div>
-                        <strong>Informasi Penting:</strong><br>
-                        File akan diupload ke Google Drive dan link-nya akan dikirim via WhatsApp. Pastikan file berformat JPG, PNG, atau PDF dengan ukuran maksimal 5MB.
-                    </div>
-                </div>
-
-                <form id="registrationForm">
-                    <!-- Data Pribadi -->
-                    <div class="section-title">
-                        <i class="fas fa-user"></i>
-                        Data Pribadi
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label>Nama Lengkap <span class="required">*</span></label>
-                            <div class="input-group">
-                                <i class="fas fa-user input-icon"></i>
-                                <input type="text" name="nama" placeholder="Masukkan nama lengkap" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Tempat Lahir <span class="required">*</span></label>
-                            <div class="input-group">
-                                <i class="fas fa-map-marker-alt input-icon"></i>
-                                <input type="text" name="tempat_lahir" placeholder="Kota kelahiran" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Tanggal Lahir <span class="required">*</span></label>
-                            <div class="input-group">
-                                <i class="fas fa-calendar input-icon"></i>
-                                <input type="date" name="tanggal_lahir" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>No. WhatsApp <span class="required">*</span></label>
-                            <div class="input-group">
-                                <i class="fab fa-whatsapp input-icon"></i>
-                                <input type="tel" name="wa" placeholder="08xxxxxxxxxx" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Email</label>
-                            <div class="input-group">
-                                <i class="fas fa-envelope input-icon"></i>
-                                <input type="email" name="email" placeholder="email@example.com">
-                            </div>
-                        </div>
-
-                        <div class="form-group full-width">
-                            <label>Alamat Lengkap <span class="required">*</span></label>
-                            <div class="input-group">
-                                <i class="fas fa-home input-icon"></i>
-                                <textarea name="alamat" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kota, Provinsi" required></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group full-width">
-                            <label>Pendidikan Terakhir <span class="required">*</span></label>
-                            <div class="input-group">
-                                <i class="fas fa-graduation-cap input-icon"></i>
-                                <select name="pendidikan" required>
-                                    <option value="">-- Pilih Pendidikan Terakhir --</option>
-                                    <option value="Aliyah">Madrasah Aliyah</option>
-                                    <option value="Muadalah Ulya">Muadalah Ulya</option>
-                                    <option value="SMA">SMA</option>
-                                    <option value="SMK">SMK</option>
-                                    <option value="Sederajat">Sederajat</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Upload Berkas -->
-                    <div class="section-title" style="margin-top: 40px;">
-                        <i class="fas fa-file-upload"></i>
-                        Upload Berkas
-                    </div>
-
-                    <div class="form-group">
-                        <label>Kartu Keluarga (KK) <span class="required">*</span></label>
-                        <div class="file-upload-container" onclick="document.getElementById('kk').click()" id="kkContainer">
-                            <input type="file" id="kk" name="kk" accept="image/*,.pdf" required>
-                            <div class="upload-icon">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                            </div>
-                            <div class="upload-text">Klik untuk upload Kartu Keluarga</div>
-                            <div class="upload-hint">Format: JPG, PNG, PDF • Maksimal 5MB</div>
-                        </div>
-                        <div class="file-preview" id="kkPreview">
-                            <div class="file-info-preview">
-                                <div class="file-icon-preview">
-                                    <i class="fas fa-file-alt"></i>
-                                </div>
-                                <div class="file-details">
-                                    <div class="file-name-text" id="kkName"></div>
-                                    <div class="file-size" id="kkSize"></div>
-                                </div>
-                            </div>
-                            <button type="button" class="btn-remove-file" onclick="removeFile('kk')">
-                                <i class="fas fa-times"></i> Hapus
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Ijazah / Surat Keterangan Lulus <span class="required">*</span></label>
-                        <div class="file-upload-container" onclick="document.getElementById('ijazah').click()" id="ijazahContainer">
-                            <input type="file" id="ijazah" name="ijazah" accept="image/*,.pdf" required>
-                            <div class="upload-icon">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                            </div>
-                            <div class="upload-text">Klik untuk upload Ijazah</div>
-                            <div class="upload-hint">Format: JPG, PNG, PDF • Maksimal 5MB</div>
-                        </div>
-                        <div class="file-preview" id="ijazahPreview">
-                            <div class="file-info-preview">
-                                <div class="file-icon-preview">
-                                    <i class="fas fa-file-alt"></i>
-                                </div>
-                                <div class="file-details">
-                                    <div class="file-name-text" id="ijazahName"></div>
-                                    <div class="file-size" id="ijazahSize"></div>
-                                </div>
-                            </div>
-                            <button type="button" class="btn-remove-file" onclick="removeFile('ijazah')">
-                                <i class="fas fa-times"></i> Hapus
-                            </button>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn-submit">
-                        <i class="fab fa-whatsapp"></i>
-                        Kirim ke WhatsApp
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // ========================================
-        // KONFIGURASI - GANTI SESUAI KEBUTUHAN
-        // ========================================
-        const CONFIG = {
-            WHATSAPP_NUMBER: '6282224241455', // Ganti dengan nomor WA admin
-            GOOGLE_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxlGo9difpbekQ0Zr_VjQakIkKb2sMmgjqn6IhgZE_GubKdAa5BlvI5WHeFUm4cuTlDAQ/exec' // Akan dibuat di langkah berikutnya
-        };
-
-        // ========================================
-        // FILE UPLOAD HANDLING
-        // ========================================
-        function setupFileUpload(fileId) {
-            const fileInput = document.getElementById(fileId);
-            const container = document.getElementById(`${fileId}Container`);
-            const preview = document.getElementById(`${fileId}Preview`);
-            
-            fileInput.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    // Validasi ukuran
-                    if (file.size > 5 * 1024 * 1024) {
-                        alert('⚠️ File terlalu besar! Maksimal 5MB');
-                        fileInput.value = '';
-                        return;
-                    }
-
-                    // Validasi tipe
-                    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
-                    if (!validTypes.includes(file.type)) {
-                        alert('⚠️ Format file tidak valid! Gunakan JPG, PNG, atau PDF');
-                        fileInput.value = '';
-                        return;
-                    }
-
-                    // Tampilkan preview
-                    showFilePreview(fileId, file);
-                    updateStep(2);
-                }
-            });
-
-            // Drag & Drop
-            container.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                container.classList.add('dragover');
-            });
-
-            container.addEventListener('dragleave', () => {
-                container.classList.remove('dragover');
-            });
-
-            container.addEventListener('drop', (e) => {
-                e.preventDefault();
-                container.classList.remove('dragover');
+    <!-- Content -->
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
                 
-                const file = e.dataTransfer.files[0];
-                if (file) {
-                    fileInput.files = e.dataTransfer.files;
-                    fileInput.dispatchEvent(new Event('change'));
-                }
+                <!-- Navigation Tabs -->
+                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="form-tab" data-bs-toggle="tab" data-bs-target="#form-pane" type="button"><i class="fas fa-file-alt me-2"></i>Formulir Pendaftaran</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="status-tab" data-bs-toggle="tab" data-bs-target="#status-pane" type="button"><i class="fas fa-search me-2"></i>Cek Status</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+                    
+                    <!-- TAB FORMULIR -->
+                    <div class="tab-pane fade show active" id="form-pane">
+                        <div class="alert alert-info border-start border-5 border-info" role="alert">
+                            <h5 class="alert-heading"><i class="fas fa-info-circle"></i> Petunjuk Pengisian</h5>
+                            <p class="mb-0 small">Isilah data dengan sebenar-benarnya sesuai dengan dokumen kependudukan (KTP/KK) dan Ijazah. Tanda bintang (*) menandakan wajib diisi.</p>
+                        </div>
+
+                        <form id="formPendaftaran">
+                            <!-- Identitas Diri -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-user me-2"></i> I. Identitas Calon Mahasantri
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <label class="form-label">ID PPS <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" name="idpps" required placeholder="Contoh: 12345678">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">NIK <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" name="nik" required>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">NISN <span class="text-danger">*</span></label>
+                                            <input type="number" class="form-control" name="nisn" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Nama Lengkap (Sesuai Ijazah) <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control text-uppercase" name="nama" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Tempat Lahir</label>
+                                            <input type="text" class="form-control text-uppercase" name="tmp_lahir" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Tanggal Lahir</label>
+                                            <input type="date" class="form-control" name="tgl_lahir" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Alamat Lengkap</label>
+                                            <textarea class="form-control text-uppercase" name="alamat" rows="2" required placeholder="Dusun, RT/RW, Desa, Kec, Kab/Kota"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Data Orang Tua -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-users me-2"></i> II. Data Orang Tua / Wali
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Nama Ayah Kandung</label>
+                                            <input type="text" class="form-control text-uppercase" name="ayah" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Nama Ibu Kandung</label>
+                                            <input type="text" class="form-control text-uppercase" name="ibu" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">No. HP / WhatsApp</label>
+                                            <input type="number" class="form-control" name="no_hp" required placeholder="08xxxxxxxxxx">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upload Berkas -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <i class="fas fa-cloud-upload-alt me-2"></i> III. Unggah Dokumen
+                                </div>
+                                <div class="card-body p-4">
+                                    <div class="alert alert-warning py-2 small">
+                                        <i class="fas fa-exclamation-triangle me-1"></i> Format file: PDF/JPG/PNG. Maksimal 2MB per file.
+                                    </div>
+                                    <div class="mb-3 row align-items-center">
+                                        <label class="col-sm-4 col-form-label">Kartu Keluarga (KK)</label>
+                                        <div class="col-sm-8">
+                                            <input type="file" class="form-control" id="fkk" accept=".pdf,.jpg,.jpeg,.png" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row align-items-center">
+                                        <label class="col-sm-4 col-form-label">Ijazah atau SKL Muadalah Ulya/Sederajat</label>
+                                        <div class="col-sm-8">
+                                            <input type="file" class="form-control" id="faliyah" accept=".pdf,.jpg,.jpeg,.png" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    <i class="fas fa-paper-plane me-2"></i> Simpan Data Pendaftaran
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- TAB STATUS -->
+                    <div class="tab-pane fade" id="status-pane">
+                        <div class="card">
+                            <div class="card-body p-5 text-center">
+                                <h4 class="card-title mb-4">Cek Status Pendaftaran</h4>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-6">
+                                        <form id="formStatus" onsubmit="cekStatus(event)">
+                                            <div class="input-group mb-3">
+                                                <input type="text" class="form-control form-control-lg" id="cek_idpps" placeholder="Masukkan ID PPS" required>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <input type="date" class="form-control form-control-lg" id="cek_tgl" required>
+                                            </div>
+                                            <button class="btn btn-primary w-100" type="submit">
+                                                <i class="fas fa-search me-2"></i> Lihat Status
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <!-- Hasil Pencarian (Hidden by default) -->
+                                <div id="statusResult" class="mt-5 text-start" style="display:none;">
+                                    <hr>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-8">
+                                            <h5 class="mb-1">Hasil Pencarian:</h5>
+                                            <table class="table table-borderless">
+                                                <tr>
+                                                    <td width="150">ID PPS</td>
+                                                    <td width="10">:</td>
+                                                    <td class="fw-bold" id="res_idpps">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nama</td>
+                                                    <td>:</td>
+                                                    <td class="fw-bold" id="res_nama">-</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Status</td>
+                                                    <td>:</td>
+                                                    <td><span class="badge bg-secondary" id="res_badge">MENUNGGU</span></td>
+                                                </tr>
+                                            </table>
+                                            <div class="alert alert-light border mt-2" id="res_pesan">
+                                                <!-- Pesan Admin -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-center">
+                                            <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" width="100" alt="Status">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p class="mb-1 fw-bold">PANITIA PENERIMAAN MAHASANTRI BARU</p>
+            <p class="mb-0">Ma'had Aly Sidogiri &copy; 2025</p>
+        </div>
+    </footer>
+
+    <!-- Loading Modal -->
+    <div class="modal fade" id="loadingModal" data-bs-backdrop="static" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-4">
+                <div class="spinner-border text-success mx-auto mb-3" role="status"></div>
+                <h5>Sedang Memproses...</h5>
+                <p class="text-muted mb-0">Mohon jangan tutup halaman ini.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script Logic -->
+    <script>
+        // KONFIGURASI URL WORKER (Ganti dengan URL Worker Anda nanti)
+        const WORKER_URL = "https://delicate-snow-6501.fatihhusni9.workers.dev/"; 
+
+        // 1. Fungsi Upload ke R2 (Sama seperti sebelumnya tapi return URL)
+        async function uploadFile(file, folder, name) {
+            // Simulasi fungsi upload, ganti dengan fetch worker R2 Anda yang lama
+            // Pastikan worker R2 Anda mengembalikan JSON { url: "..." }
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = async () => {
+                    try {
+                        const base64 = reader.result.split(",")[1];
+                        // Ganti URL ini dengan endpoint R2 Upload Worker Anda
+                        const res = await fetch(WORKER_URL + "/upload", { 
+                            method: "POST",
+                            body: JSON.stringify({
+                                filename: name,
+                                filedata: base64,
+                                mimetype: file.type,
+                                folder: folder
+                            })
+                        });
+                        const data = await res.json();
+                        resolve(data.url);
+                    } catch (e) { reject(e); }
+                };
+                reader.readAsDataURL(file);
             });
         }
 
-        function showFilePreview(fileId, file) {
-            const preview = document.getElementById(`${fileId}Preview`);
-            const nameEl = document.getElementById(`${fileId}Name`);
-            const sizeEl = document.getElementById(`${fileId}Size`);
-            
-            nameEl.textContent = file.name;
-            sizeEl.textContent = formatFileSize(file.size);
-            preview.classList.add('show');
-        }
-
-        function removeFile(fileId) {
-            event.stopPropagation();
-            const fileInput = document.getElementById(fileId);
-            const preview = document.getElementById(`${fileId}Preview`);
-            
-            fileInput.value = '';
-            preview.classList.remove('show');
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
-        }
-
-        // ========================================
-        // PROGRESS STEPS
-        // ========================================
-        function updateStep(stepNumber) {
-            for (let i = 1; i <= 3; i++) {
-                const step = document.getElementById(`step${i}`);
-                if (i < stepNumber) {
-                    step.classList.add('completed');
-                    step.classList.remove('active');
-                } else if (i === stepNumber) {
-                    step.classList.add('active');
-                    step.classList.remove('completed');
-                } else {
-                    step.classList.remove('active', 'completed');
-                }
-            }
-        }
-
-        // ========================================
-        // FORM SUBMISSION
-        // ========================================
-        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+        // 2. Handle Submit Form
+        document.getElementById('formPendaftaran').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            updateStep(3);
-            showLoading(true);
-
-            const formData = new FormData(e.target);
-            const data = {};
-            
-            // Get text data
-            for (let [key, value] of formData.entries()) {
-                if (key !== 'kk' && key !== 'ijazah') {
-                    data[key] = value;
-                }
-            }
-
-            // Get files
-            const kkFile = document.getElementById('kk').files[0];
-            const ijazahFile = document.getElementById('ijazah').files[0];
+            // Tampilkan Loading
+            const modal = new bootstrap.Modal(document.getElementById('loadingModal'));
+            modal.show();
 
             try {
-                // Upload files to Google Drive
-                showProgress(true, 'Mengupload Kartu Keluarga...');
-                const kkUrl = await uploadToGoogleDrive(kkFile, 'KK');
-                
-                showProgress(true, 'Mengupload Ijazah...');
-                const ijazahUrl = await uploadToGoogleDrive(ijazahFile, 'Ijazah');
+                const formData = new FormData(e.target);
+                const idpps = formData.get('idpps');
 
-                // Format WhatsApp message
-                const message = formatWhatsAppMessage(data, kkUrl, ijazahUrl);
+                // Upload File dulu
+                const fkk = document.getElementById('fkk').files[0];
+                const faliyah = document.getElementById('faliyah').files[0];
 
-                // Send to WhatsApp
-                showProgress(true, 'Membuka WhatsApp...');
-                setTimeout(() => {
-                    showLoading(false);
-                    sendToWhatsApp(message);
-                    
-                    // Reset form
-                    setTimeout(() => {
-                        if (confirm('✅ Data berhasil dikirim!\n\nApakah Anda ingin mereset form untuk pendaftar baru?')) {
-                            location.reload();
-                        }
-                    }, 1000);
-                }, 1000);
+                // Upload parallel agar cepat
+                const [urlKK, urlAliyah] = await Promise.all([
+                    uploadFile(fkk, 'KK', `${idpps}_KK`),
+                    uploadFile(faliyah, 'Aliyah', `${idpps}_Aliyah`)
+                ]);
+
+                // Persiapan Data JSON untuk D1
+                const payload = {
+                    id_pps: idpps,
+                    nik: formData.get('nik'),
+                    nisn: formData.get('nisn'),
+                    nama: formData.get('nama'),
+                    tmp_lahir: formData.get('tmp_lahir'),
+                    tgl_lahir: formData.get('tgl_lahir'),
+                    alamat: formData.get('alamat'),
+                    ayah: formData.get('ayah'),
+                    ibu: formData.get('ibu'),
+                    no_hp: formData.get('no_hp'),
+                    url_kk: urlKK,
+                    url_ijazah: urlAliyah
+                };
+
+                // Kirim ke Cloudflare D1 Worker
+                const response = await fetch(WORKER_URL + "/submit", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if(result.success) {
+                    modal.hide();
+                    alert("Alhamdulillah, Data berhasil disimpan! Silakan cek status secara berkala.");
+                    // Opsional: Kirim WA notifikasi
+                    window.location.reload();
+                } else {
+                    throw new Error(result.message);
+                }
 
             } catch (error) {
-                showLoading(false);
-                alert('❌ Terjadi kesalahan: ' + error.message);
-                console.error(error);
+                modal.hide();
+                alert("Terjadi kesalahan: " + error.message);
             }
         });
 
-        // ========================================
-        // UPLOAD TO GOOGLE DRIVE
-        // ========================================
-        async function uploadToR2(file, folderName) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-
-        reader.onload = async () => {
-            const base64File = reader.result.split(",")[1];
-
-            const res = await fetch("https://delicate-snow-6501.fatihhusni9.workers.dev/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    filename: file.name,
-                    filedata: base64File,
-                    mimetype: file.type,
-                    folder: folderName
-                })
-            });
-
-            const json = await res.json();
-            resolve(json.url);
-        };
-
-        reader.onerror = () => reject("Gagal membaca file");
-        reader.readAsDataURL(file);
-    });
-}
-
-        // ========================================
-        // FORMAT MESSAGE
-        // ========================================
-        function formatWhatsAppMessage(data, kkUrl, ijazahUrl) {
-            return `
-*═══════════════════════*
-*PENDAFTARAN MAHASANTRI BARU*
-*Ma'had Aly Sidogiri*
-*Tahun Ajaran 2024/2025*
-*═══════════════════════*
-
-*📋 DATA PRIBADI*
-━━━━━━━━━━━━━━━━━━━━━━
-👤 Nama: ${data.nama}
-📍 Tempat Lahir: ${data.tempat_lahir}
-📅 Tanggal Lahir: ${formatDate(data.tanggal_lahir)}
-📱 No. WhatsApp: ${data.wa}
-${data.email ? `📧 Email: ${data.email}` : ''}
-🏠 Alamat: ${data.alamat}
-🎓 Pendidikan: ${data.pendidikan}
-
-*📎 BERKAS LAMPIRAN*
-━━━━━━━━━━━━━━━━━━━━━━
-📄 Kartu Keluarga (KK):
-${kkUrl}
-
-📜 Ijazah:
-${ijazahUrl}
-
-*═══════════════════════*
-_Dikirim melalui Formulir Online_
-_${new Date().toLocaleString('id-ID')}_
-            `.trim();
-        }
-
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('id-ID', options);
-        }
-
-        // ========================================
-        // SEND TO WHATSAPP
-        // ========================================
-        function sendToWhatsApp(message) {
-            const url = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
-        }
-
-        // ========================================
-        // UI HELPERS
-        // ========================================
-        function showLoading(show) {
-            const overlay = document.getElementById('loadingOverlay');
-            if (show) {
-                overlay.classList.add('show');
-            } else {
-                overlay.classList.remove('show');
-                showProgress(false);
-            }
-        }
-
-        function showProgress(show, text = '') {
-            const progress = document.getElementById('uploadProgress');
-            const progressText = document.getElementById('progressText');
+        // 3. Handle Cek Status
+        async function cekStatus(e) {
+            e.preventDefault();
+            const id = document.getElementById('cek_idpps').value;
+            const tgl = document.getElementById('cek_tgl').value;
+            const resultDiv = document.getElementById('statusResult');
             
-            if (show) {
-                progress.classList.add('show');
-                progressText.textContent = text;
-                animateProgress();
-            } else {
-                progress.classList.remove('show');
-            }
-        }
+            // Reset display
+            resultDiv.style.display = 'none';
 
-        function animateProgress() {
-            const bar = document.getElementById('progressBar');
-            let width = 0;
-            const interval = setInterval(() => {
-                if (width >= 90) {
-                    clearInterval(interval);
+            try {
+                const res = await fetch(`${WORKER_URL}/status?id=${id}&tgl=${tgl}`);
+                const data = await res.json();
+
+                if(data.found) {
+                    document.getElementById('res_idpps').innerText = data.data.id_pps;
+                    document.getElementById('res_nama').innerText = data.data.nama;
+                    
+                    const badge = document.getElementById('res_badge');
+                    badge.innerText = data.data.status;
+                    
+                    // Styling Badge
+                    badge.className = 'badge ';
+                    if(data.data.status === 'LULUS') badge.classList.add('bg-success');
+                    else if(data.data.status === 'DITOLAK') badge.classList.add('bg-danger');
+                    else badge.classList.add('bg-warning', 'text-dark');
+
+                    document.getElementById('res_pesan').innerText = data.data.pesan_admin || "Data sedang dalam proses verifikasi panitia.";
+                    
+                    resultDiv.style.display = 'block';
                 } else {
-                    width += 10;
-                    bar.style.width = width + '%';
+                    alert("Data tidak ditemukan! Pastikan ID PPS dan Tanggal Lahir benar.");
                 }
-            }, 200);
+            } catch (err) {
+                alert("Gagal mengambil data.");
+            }
         }
-
-        // ========================================
-        // INITIALIZE
-        // ========================================
-        document.addEventListener('DOMContentLoaded', function() {
-            setupFileUpload('kk');
-            setupFileUpload('ijazah');
-            
-            // Form validation on input
-            document.querySelectorAll('input, select, textarea').forEach(input => {
-                input.addEventListener('input', () => {
-                    if (input.checkValidity()) {
-                        input.style.borderColor = 'var(--secondary)';
-                    } else {
-                        input.style.borderColor = '';
-                    }
-                });
-            });
-        });
     </script>
 </body>
 </html>
