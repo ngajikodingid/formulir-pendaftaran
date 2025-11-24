@@ -10,8 +10,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts (Formal Serif & Sans) -->
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
+    <!-- SweetAlert2 CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   
     <style>
+         /* Custom Font untuk SweetAlert agar seragam dengan web */
+    div:where(.swal2-container) {
+        font-family: 'Roboto', sans-serif !important;
+    }
+    /* Custom warna tombol confirm agar sesuai tema PPS */
+    .swal2-confirm {
+        background-color: var(--pps-primary) !important;
+    }
         :root {
             --pps-primary: #0f5132; /* Dark Green Sidogiri Style */
             --pps-secondary: #198754;
@@ -357,7 +369,7 @@
     <!-- Script Logic -->
     <script>
         // KONFIGURASI URL WORKER (Ganti dengan URL Worker Anda nanti)
-        const WORKER_URL = "https://delicate-snow-6501.fatihhusni9.workers.dev/"; 
+        const WORKER_URL = "https://delicate-snow-6501.fatihhusni9.workers.dev"; 
 
         // 1. Fungsi Upload ke R2 (Sama seperti sebelumnya tapi return URL)
         async function uploadFile(file, folder, name) {
@@ -387,104 +399,194 @@
         }
 
         // 2. Handle Submit Form
-        document.getElementById('formPendaftaran').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Tampilkan Loading
-            const modal = new bootstrap.Modal(document.getElementById('loadingModal'));
-            modal.show();
+    // Konfigurasi No WA Panitia
+const NOMOR_WA_ADMIN = "6282224241455"; 
 
-            try {
-                const formData = new FormData(e.target);
-                const idpps = formData.get('idpps');
+document.getElementById('formPendaftaran').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-                // Upload File dulu
-                const fkk = document.getElementById('fkk').files[0];
-                const faliyah = document.getElementById('faliyah').files[0];
+    // 1. Tampilkan Loading Modern
+    Swal.fire({
+        title: 'Sedang Memproses Data',
+        html: 'Mohon tunggu, sistem sedang mengupload berkas dan menyimpan ke database...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
 
-                // Upload parallel agar cepat
-                const [urlKK, urlAliyah] = await Promise.all([
-                    uploadFile(fkk, 'KK', `${idpps}_KK`),
-                    uploadFile(faliyah, 'Aliyah', `${idpps}_Aliyah`)
-                ]);
+    try {
+        const formData = new FormData(e.target);
+        const idpps = formData.get('idpps');
+        const namaSantri = formData.get('nama');
 
-                // Persiapan Data JSON untuk D1
-                const payload = {
-                    id_pps: idpps,
-                    nik: formData.get('nik'),
-                    nisn: formData.get('nisn'),
-                    nama: formData.get('nama'),
-                    tmp_lahir: formData.get('tmp_lahir'),
-                    tgl_lahir: formData.get('tgl_lahir'),
-                    alamat: formData.get('alamat'),
-                    ayah: formData.get('ayah'),
-                    ibu: formData.get('ibu'),
-                    no_hp: formData.get('no_hp'),
-                    url_kk: urlKK,
-                    url_ijazah: urlAliyah
-                };
+        // 2. Upload File ke R2 (Parallel)
+        const fkk = document.getElementById('fkk').files[0];
+        const faliyah = document.getElementById('faliyah').files[0];
 
-                // Kirim ke Cloudflare D1 Worker
-                const response = await fetch(WORKER_URL + "/submit", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(payload)
-                });
+        // Validasi sederhana jika file kosong (meski sudah ada required di HTML)
+        if (!fkk || !faliyah) throw new Error("Berkas belum dipilih lengkap.");
 
-                const result = await response.json();
+        const [urlKK, urlAliyah] = await Promise.all([
+            uploadFile(fkk, 'KK', `${idpps}_KK`),
+            uploadFile(faliyah, 'Aliyah', `${idpps}_Aliyah`)
+        ]);
 
-                if(result.success) {
-                    modal.hide();
-                    alert("Alhamdulillah, Data berhasil disimpan! Silakan cek status secara berkala.");
-                    // Opsional: Kirim WA notifikasi
-                    window.location.reload();
-                } else {
-                    throw new Error(result.message);
-                }
+        // 3. Simpan ke Database D1
+        const payload = {
+            id_pps: idpps,
+            nik: formData.get('nik'),
+            nisn: formData.get('nisn'),
+            nama: namaSantri,
+            tmp_lahir: formData.get('tmp_lahir'),
+            tgl_lahir: formData.get('tgl_lahir'),
+            alamat: formData.get('alamat'),
+            ayah: formData.get('ayah'),
+            ibu: formData.get('ibu'),
+            no_hp: formData.get('no_hp'),
+            url_kk: urlKK,
+            url_ijazah: urlAliyah
+        };
 
-            } catch (error) {
-                modal.hide();
-                alert("Terjadi kesalahan: " + error.message);
-            }
+        const response = await fetch(WORKER_URL + "/submit", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(payload)
         });
 
-        // 3. Handle Cek Status
-        async function cekStatus(e) {
-            e.preventDefault();
-            const id = document.getElementById('cek_idpps').value;
-            const tgl = document.getElementById('cek_tgl').value;
-            const resultDiv = document.getElementById('statusResult');
-            
-            // Reset display
-            resultDiv.style.display = 'none';
+        const result = await response.json();
 
-            try {
-                const res = await fetch(`${WORKER_URL}/status?id=${id}&tgl=${tgl}`);
-                const data = await res.json();
+        if (result.success) {
+            // Format Pesan WA
+            let msg = `*Yth. Panitia PMB PPS*
+Assalamualaikum Wr. Wb.
 
-                if(data.found) {
-                    document.getElementById('res_idpps').innerText = data.data.id_pps;
-                    document.getElementById('res_nama').innerText = data.data.nama;
-                    
-                    const badge = document.getElementById('res_badge');
-                    badge.innerText = data.data.status;
-                    
-                    // Styling Badge
-                    badge.className = 'badge ';
-                    if(data.data.status === 'LULUS') badge.classList.add('bg-success');
-                    else if(data.data.status === 'DITOLAK') badge.classList.add('bg-danger');
-                    else badge.classList.add('bg-warning', 'text-dark');
+Mohon verifikasi data pendaftaran baru berikut:
 
-                    document.getElementById('res_pesan').innerText = data.data.pesan_admin || "Data sedang dalam proses verifikasi panitia.";
-                    
-                    resultDiv.style.display = 'block';
+*A. IDENTITAS SANTRI*
+• ID PPS : ${idpps}
+• Nama : *${namaSantri}*
+• NIK : ${formData.get('nik')}
+• Asal : ${formData.get('alamat')}
+
+*B. BERKAS (Tersimpan di Database)*
+📄 KK : ${urlKK}
+📄 Ijazah : ${urlAliyah}
+
+Data telah tersimpan di server. Mohon dicek.
+Terima kasih.`;
+
+            const linkWA = `https://wa.me/${NOMOR_WA_ADMIN}?text=${encodeURIComponent(msg)}`;
+
+            // 4. Tampilkan Notifikasi Sukses + Pilihan ke WA
+            Swal.fire({
+                title: 'Alhamdulillah!',
+                text: 'Data pendaftaran berhasil disimpan ke Database.',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: '<i class="fab fa-whatsapp"></i> Lanjut Kirim ke WA',
+                cancelButtonText: 'Tutup',
+                confirmButtonColor: '#25D366', // Warna Hijau WA
+                cancelButtonColor: '#6c757d',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = linkWA;
                 } else {
-                    alert("Data tidak ditemukan! Pastikan ID PPS dan Tanggal Lahir benar.");
+                    // Jika user pilih tutup, refresh halaman
+                    window.location.reload();
                 }
-            } catch (err) {
-                alert("Gagal mengambil data.");
-            }
+            });
+
+        } else {
+            throw new Error(result.message);
         }
+
+    } catch (error) {
+        // Tampilkan Error dengan cantik
+        Swal.fire({
+            icon: 'error',
+            title: 'Terjadi Kesalahan',
+            text: error.message || 'Gagal menyimpan data, periksa koneksi internet Anda.',
+            confirmButtonText: 'Coba Lagi'
+        });
+        console.error(error);
+    }
+});
+        // 3. Handle Cek Status
+        // Definisi Toast Mixin
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+
+async function cekStatus(e) {
+    e.preventDefault();
+    const id = document.getElementById('cek_idpps').value;
+    const tgl = document.getElementById('cek_tgl').value;
+    const resultDiv = document.getElementById('statusResult');
+    
+    resultDiv.style.display = 'none';
+
+    // Loading kecil
+    const btnSubmit = e.target.querySelector('button');
+    const originalText = btnSubmit.innerHTML;
+    btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mencari...';
+    btnSubmit.disabled = true;
+
+    try {
+        const res = await fetch(`${WORKER_URL}/status?id=${id}&tgl=${tgl}`);
+        const data = await res.json();
+
+        if(data.found) {
+            // Tampilkan Toast Sukses
+            Toast.fire({
+                icon: 'success',
+                title: 'Data ditemukan!'
+            });
+
+            // Isi Data
+            document.getElementById('res_idpps').innerText = data.data.id_pps;
+            document.getElementById('res_nama').innerText = data.data.nama;
+            const badge = document.getElementById('res_badge');
+            badge.innerText = data.data.status;
+            
+            // Reset Class Badge
+            badge.className = 'badge badge-status ';
+            if(data.data.status === 'LULUS') badge.classList.add('bg-success');
+            else if(data.data.status.includes('TOLAK')) badge.classList.add('bg-danger');
+            else badge.classList.add('bg-warning', 'text-dark');
+
+            document.getElementById('res_pesan').innerText = data.data.pesan_admin || "-";
+            resultDiv.style.display = 'block';
+
+        } else {
+            // Tampilkan Toast Error/Warning
+            Toast.fire({
+                icon: 'warning',
+                title: 'Data tidak ditemukan',
+                text: 'Periksa kembali ID PPS dan Tanggal Lahir.'
+            });
+        }
+    } catch (err) {
+        Toast.fire({
+            icon: 'error',
+            title: 'Gagal memuat data',
+            text: 'Periksa koneksi internet.'
+        });
+    } finally {
+        // Kembalikan tombol seperti semula
+        btnSubmit.innerHTML = originalText;
+        btnSubmit.disabled = false;
+    }
+}
     </script>
 </body>
 </html>
